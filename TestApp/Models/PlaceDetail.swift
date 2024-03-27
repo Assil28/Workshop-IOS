@@ -7,9 +7,9 @@
 
 import Foundation
 struct PlaceDetail {
-    let imageUrl:String
+    let image:String?
     let title:String
     let adresse :String
     let description:String?
-    let wikipedia :String?
+  let   wikipedia_extracts :String?
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct TestAppApp: App {
     
     @StateObject var homeViewModel : HomeViewModel = HomeViewModel(placeMapper: PlaceMapper())
-    
+    @StateObject var detailViewModel : DetailViewModel = DetailViewModel(placeMapper: PlaceMapper())
 
     var body: some Scene {
         WindowGroup {
@@ -19,6 +19,9 @@ struct TestAppApp: App {
             NavigationStack{
                 HomeView()
             }.environmentObject(self.homeViewModel)
+                .environmentObject(self.detailViewModel)
+                
+            
            
 
         }

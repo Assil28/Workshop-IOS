@@ -71,7 +71,7 @@ struct HomeView:View {
                     { item in
                        
                         NavigationLink{
-                            Text("")
+                            DetailView(id: "W27922391")
                         }label: {
                             PlaceItemView(item: item)
                             
