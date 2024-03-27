@@ -7,15 +7,30 @@
 
 import Foundation
 class HomeViewModel :ObservableObject {
-    let placeMapper :PlaceMapper=PlaceMapper()
+    
+    let placeMapper :PlaceMapper
+    
+    init(placeMapper: PlaceMapper) {
+        self.placeMapper = placeMapper
+    }
+   @Published var getAllPlacesStates : GetAllPlacesState = .loading
+    
     func getAllPlaces(){
         Task {
           let result =  await self.placeMapper.getAllPlaces(url:Consts.URL)
-            if case let .success(let success) = result {
-                print(success)
+            if case  .success(let places) = result {
+                DispatchQueue.main.async{
+                    self.getAllPlacesStates = .success(places)
+                }
+                
+                
+             
             }
-            else {
-                print("error")
+            else if case  .failure(let error) = result {
+                DispatchQueue.main.async{
+                    self.getAllPlacesStates = .error(error.message)
+                }
+                
             }
         }
     }

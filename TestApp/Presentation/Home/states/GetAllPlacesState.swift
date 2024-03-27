@@ -6,3 +6,8 @@
 //
 
 import Foundation
+enum GetAllPlacesState {
+    case loading
+    case success ([PlaceItem])
+    case error (String)
+}

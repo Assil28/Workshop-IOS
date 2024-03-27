@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct HomeView:View {
-    let places: [PlaceItem]=[
-        
-    ]
+
     
     let options=["My Location","Tunis","Djerba","Bizerte"]
     
     @State var selectedOption=0
+    @EnvironmentObject var homeViewModel : HomeViewModel
+    let places:[PlaceItem]=[PlaceItem(name: "tete", distance: 34, kinds: ["String"])]
+    
     var body: some View {
         
         VStack{
@@ -38,35 +39,54 @@ struct HomeView:View {
             }
             
             
-            HStack{
-             
-                VStack{
-                    Text("Recent Places (\(places.count))").font(.title3)
-                    Text("Range")
-                }
-                Spacer()
-                Picker(
-                    selection:$selectedOption, label: Text("")){
-                        ForEach(0..<options.count){
-                            option in
-                            Text(
-                                self.options[ option]
-                            ).tag(option)
-                        }
+            
+            
+            if case .loading = self.homeViewModel.getAllPlacesStates{
+                HStack{
+                    ProgressView().progressViewStyle(.circular)
+                }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,maxHeight:.infinity)
+            }else if  case  let .success(places) = self.homeViewModel.getAllPlacesStates{
+                
+                HStack{
+                 
+                    VStack{
+                        Text("Recent Places (\(places.count))").font(.title3)
+                        Text("Range")
                     }
+                    Spacer()
+                    Picker(
+                        selection:$selectedOption, label: Text("")){
+                            ForEach(0..<options.count){
+                                option in
+                                Text(
+                                    self.options[ option]
+                                ).tag(option)
+                            }
+                        }
+                    
+                }
+                ScrollView(showsIndicators: false){
+                    
+                    ForEach(places)
+                    { item in
+                       
+                        NavigationLink{
+                            Text("")
+                        }label: {
+                            PlaceItemView(item: item)
+                            
+                        }.buttonStyle(PlainButtonStyle())
+                   }
+                }
                 
             }
-            
-            ForEach(self.places)
-           { item in
-               
-               PlaceItemView(item: item)
-               
-           }
+           
             
             
             
-        }.frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).padding(.horizontal,8)
+        }.frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).padding(.horizontal,8).onAppear{
+            self.homeViewModel.getAllPlaces()
+        }
          
     }
 }

@@ -35,7 +35,13 @@ struct PlaceItemView: View {
                     }
                     
                     HStack{
-                        Text(item.kinds).font(.title3).background(.gray).cornerRadius(5)
+                        
+                        ForEach(self.item.kinds,id:\.self)
+                       { itemObj in
+                           
+                           Text(itemObj).font(.caption).background(.gray).cornerRadius(5)
+                       }
+                        
                         Spacer()
                         Text( "\(String(format:"%.1f m",item.distance))").font(.title2)}
 
@@ -49,5 +55,5 @@ struct PlaceItemView: View {
 }
 
 #Preview {
-    PlaceItemView(item: PlaceItem(name: "test1", distance: 30, kinds: "historic"))
+    PlaceItemView(item: PlaceItem(name: "test1", distance: 30, kinds: ["historic","islamic"]))
 }

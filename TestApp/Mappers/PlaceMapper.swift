@@ -7,7 +7,10 @@
 
 import Foundation
 class PlaceMapper {
+    
     let placedatasource :PlaceDataSource=PlaceDataSource()
+    
+    
     func getAllPlaces (url :String) async-> Result<[PlaceItem],Failure> {
         
          let result =  try? await  placedatasource.getAllPlaces(url: Consts.URL)
