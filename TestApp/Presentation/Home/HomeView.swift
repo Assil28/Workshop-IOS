@@ -1,27 +1,20 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  TestApp
 //
 //  Created by Orangeodc7 on 26/3/2024.
 //
 
 import SwiftUI
-import CoreData
 
-
-
-struct ContentView: View {
+struct HomeView:View {
     let places: [PlaceItem]=[
-        PlaceItem(name: "test1", distance: 30, kinds: "historic"),
-        PlaceItem(name: "test2", distance: 40, kinds: "islamic"),
-        PlaceItem(name: "test3", distance: 44, kinds: "historic"),
-        PlaceItem(name: "test4", distance: 22, kinds: "islamic"),
+        
     ]
     
     let options=["My Location","Tunis","Djerba","Bizerte"]
     
     @State var selectedOption=0
-
     var body: some View {
         
         VStack{
@@ -77,8 +70,9 @@ struct ContentView: View {
          
     }
 }
-    
+
+
 
 #Preview {
-    ContentView()
+    HomeView()
 }
